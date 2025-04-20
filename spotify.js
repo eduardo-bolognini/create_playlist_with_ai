@@ -53,16 +53,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-// Middleware di autenticazione
-app.use((req, res, next) => {
-  const publicPaths = ['/login', '/callback'];
-  if (!req.cookies.access_token && !publicPaths.includes(req.path)) {
-    return res.redirect('/login');
-  }
-  next();
-});
 
-// Serviamo index.html dal filesystem
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -91,24 +82,37 @@ app.get('/callback', async (req, res) => {
 });
 
 app.post('/generate', async (req, res) => {
-  try {
-    const prompt = req.body.prompt;
-    const aiResult = await getSongsFromAI(prompt);
-    const spotifyApi = createSpotifyClient();
-    spotifyApi.setAccessToken(req.cookies.access_token);
+    const accessToken = req.cookies.access_token;
+  
+    if (!accessToken) {
+      return res.status(401).json({ error: 'Access token mancante. Effettua il login.' });
+    }
+  
+    try {
+        const spotifyApi = createSpotifyClient();
+        spotifyApi.setAccessToken(accessToken);
 
-    const playlist = await spotifyApi.createPlaylist(aiResult.name, {
-      description: aiResult.description,
-      public: false
-    });
-    await addTracks(spotifyApi, playlist.body.id, aiResult.tracks);
-
-    res.json({ url: playlist.body.external_urls.spotify });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
-});
+        const prompt = req.body.prompt;
+        const aiResult = await getSongsFromAI(prompt);
+    
+        
+        const playlist = await spotifyApi.createPlaylist(aiResult.name, {
+            description: aiResult.description,
+            public: false
+        });
+  
+      await addTracks(spotifyApi, playlist.body.id, aiResult.tracks);
+  
+      res.json({ url: playlist.body.external_urls.spotify });
+  
+    } catch (err) {
+      if (err.statusCode === 401 || err.message.includes('access token')) {
+        return res.status(401).json({ error: 'Token scaduto o non valido. Effettua nuovamente il login.' });
+      }
+      console.log(err);
+      res.status(500).json({ error: 'Errore interno durante la creazione della playlist.' });
+    }
+  });
 
 const PORT = process.env.PORT || 3050;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

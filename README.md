@@ -1,8 +1,14 @@
 # 🎿 Create Playlist with AI
 
+
+
 **Generate personalized Spotify playlists using AI and natural language prompts.**
 
 This Node.js application integrates the Spotify Web API with OpenAI's GPT-4.1 to create custom playlists based on user-provided prompts. Simply describe the kind of music you're in the mood for, and the app will generate a tailored playlist for you.
+
+## 🎥 Demo Video
+
+[![Watch the video](https://img.youtube.com/vi/xKmfEfM0EEc/hqdefault.jpg)](https://youtu.be/xKmfEfM0EEc)
 
 ---
 

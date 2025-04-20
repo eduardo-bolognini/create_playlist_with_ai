@@ -32,6 +32,21 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      flex-direction: column;
+      position: relative;
+    }
+    .github-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .github-link img {
+      width: 32px;
+      height: 32px;
+      transition: transform 0.2s ease;
+    }
+    .github-link img:hover {
+      transform: scale(1.1);
     }
     .container {
       background: var(--card-bg);
@@ -41,6 +56,7 @@
       max-width: 480px;
       width: 100%;
       text-align: center;
+      position: relative;
     }
     h1 {
       font-size: 1.8rem;
@@ -129,10 +145,13 @@
       border-radius: var(--border-radius);
       text-decoration: none;
     }
-
   </style>
 </head>
 <body>
+  <a href="https://github.com/eduardo-bolognini/create_playlist_with_ai" class="github-link" target="_blank" aria-label="GitHub Repository">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub icon">
+  </a>
+
   <div class="container">
     <h1>AI Playlist Generator + Spotify</h1>
     <form id="prompt-form">

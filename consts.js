@@ -50,3 +50,5 @@ module.exports.openai_response = {
         additionalProperties: false
     }
 }
+
+module.exports.admin_password = "YOUR ADMIN PASSWORD";

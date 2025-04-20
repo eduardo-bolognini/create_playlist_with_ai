@@ -1,13 +1,15 @@
+require('dotenv').config();
+
 const path = require('path');
 const SpotifyWebApi = require('spotify-web-api-node');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const { client_id, client_secret, redirect_uri, openai_key, openai_instruction, openai_response, admin_password} = require('./consts');
+const { client_id, client_secret, redirect_uri, openai_key, admin_password } = process.env;  
+const { openai_instruction, openai_response } = require('./consts');  
 const OpenAI = require('openai');
 const openai = new OpenAI({ apiKey: openai_key });
 const fs = require('fs');
-
 const DB_PATH = path.join(__dirname, 'user_usage.json');
 
 if (!fs.existsSync(DB_PATH)) {

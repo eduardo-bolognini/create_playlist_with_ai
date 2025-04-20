@@ -46,25 +46,13 @@ This Node.js application integrates the Spotify Web API with OpenAI's GPT-4.1 to
 
 3. **Configure Environment Variables**
 
-   Create a `consts.js` file in the root directory and add your configuration details:
-
-   ```javascript
-   module.exports = {
-     client_id: 'YOUR_SPOTIFY_CLIENT_ID',
-     client_secret: 'YOUR_SPOTIFY_CLIENT_SECRET',
-     redirect_uri: 'YOUR_SPOTIFY_REDIRECT_URI',
-     openai_key: 'YOUR_OPENAI_API_KEY',
-     openai_instruction: 'Your custom instruction for the AI.',
-     openai_response: 'Your preferred response format from the AI.'
-   };
-   ```
-
+   Modify file 'consts.js' to configure yours keys.è
    Replace the placeholder strings with your actual credentials and desired instructions.
 
 4. **Start the Server**
 
    ```bash
-   npm start
+   npm app
    ```
 
    The application will be running at `http://localhost:3050`.
@@ -74,10 +62,7 @@ This Node.js application integrates the Spotify Web API with OpenAI's GPT-4.1 to
 ## 🌐 Usage
 
 1. Navigate to `http://localhost:3050` in your web browser.
-2. Click on the **Login with Spotify** button to authenticate.
-3. After successful login, you'll be redirected back to the application.
-4. Enter a descriptive prompt (e.g., "Chill evening jazz") and submit.
-5. The application will generate a playlist based on your prompt and provide a link to it on Spotify.
+2. Start Using it.
 
 ---
 
@@ -87,7 +72,7 @@ This Node.js application integrates the Spotify Web API with OpenAI's GPT-4.1 to
 create_playlist_with_ai/
 ├── consts.js             # Configuration file with API keys and settings
 ├── index.html            # Frontend interface
-├── server.js             # Main server file
+├── app.js                # Main server file
 ├── package.json          # Project metadata and dependencies
 └── README.md             # Project documentation
 ```

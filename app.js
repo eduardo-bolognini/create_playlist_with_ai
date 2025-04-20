@@ -153,6 +153,20 @@ app.post('/admin/add-privileged', (req, res) => {
   res.json({ success: true, message: `Utente ${userId} aggiunto agli utenti privilegiati` });
 });
 
+app.post('/admin/check-user-usage', (req, res) => {
+  const { adminPassword } = req.body;
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || admin_password;
+  if (adminPassword !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Password amministratore non valida' });
+  }
+  const db = readDb();
+  res.json({
+    privilegedUsers: db.privilegedUsers,
+    usageLog: db.usageLog
+  });
+});
+
+
 app.post('/generate', async (req, res) => {
   const accessToken = req.cookies.access_token;
   const userId = req.cookies.user_id;
